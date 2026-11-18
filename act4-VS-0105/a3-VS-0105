@@ -1,0 +1,220 @@
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+## Nahum Flores NC 0065
+
+# 1. Crear diccionario con datos de rutinas de nutrición
+rutinas_nutricion = {
+    'id_plan': [501, 502, 503, 504, 505, 506],
+    'nombre_plan': ['Definición', 'Volumen', 'Mantenimiento', 'Vegano', 'Keto', 'Deportista'],
+    'calorias_diarias': [1800, 3000, 2200, 2000, 1600, 2800],
+    'proteinas_gramos': [150, 200, 120, 80, 120, 180],
+    'carbohidratos_gramos': [150, 350, 250, 250, 50, 300],
+    'grasas_gramos': [60, 80, 70, 70, 120, 90],
+    'comidas_por_dia': [5, 6, 4, 4, 4, 5],
+    'costo_semanal_estimado': [800, 1200, 900, 1000, 1100, 1300],
+    'dificultad_preparacion': ['Media', 'Alta', 'Baja', 'Media', 'Alta', 'Alta'],
+    'aprobado_por_nutriologo': [True, True, True, True, True, True]
+}
+
+print("Análisis Exploratorio de Datos EDA")
+print("Exploratory Data Analysis por Nahum Flores NC 0065")
+print("Crear el diccionario con 10 listas y 6 elementos")
+
+# 2. Convertir diccionario en DataFrame
+df = pd.DataFrame(rutinas_nutricion)
+
+print("\n--- TABLA ORIGINAL DE RUTINAS DE NUTRICIÓN ---")
+print(df)
+
+# 3. Exportar los datos a CSV
+print("\n-+-+-+-+-+- Convertir el DataFrame en archivo CSV -+-+-+-+-")
+
+df.to_csv(
+    'rutinas_nutricion_0065.csv',
+    index=False,
+    encoding='utf-8-sig'
+)
+
+print("\nArchivo CSV creado correctamente")
+
+# 4. Leer el archivo CSV
+print("\n-+-+-+-+-+- Leer los datos desde el archivo CSV -+-+-+-+-+-")
+print('rutinas_nutricion_0065.csv')
+
+df = pd.read_csv('rutinas_nutricion_0065.csv', encoding='utf-8-sig')
+
+print("\n--- DATOS LEÍDOS DESDE CSV ---")
+print(df)
+
+print("+-+-+-+-+-+ 5. Análisis Exploratorio de Datos (EDA) -+-+-+-+-+")
+
+# 5. Primeros y últimos registros
+print("\n1. PRIMEROS REGISTROS (Head):")
+print(df.head(3))
+
+print("\n2. ÚLTIMOS REGISTROS (Tail):")
+print(df.tail(2))
+
+# 6. Dimensiones y estructura
+print("\n+-+-+-+-+-+ 6. Dimensiones y estructura -+-+-+-+-+")
+
+print("\n3. DIMENSIONES (Filas, Columnas):", df.shape)
+
+print("\n4. NOMBRES DE COLUMNAS:\n", df.columns)
+
+print("\n5. TIPOS DE DATOS:\n", df.dtypes)
+
+# 7. Estadísticas y limpieza
+print("\n-+-+-+-+-+- Estadísticas y limpieza -+-+-+-+-+-")
+
+print("\n6. ESTADÍSTICAS DESCRIPTIVAS:")
+print(df.describe())
+
+print("\n7. VALORES FALTANTES (Nulls):")
+print(df.isnull().sum())
+
+print("\n8. REGISTROS DUPLICADOS:")
+print(df.duplicated().sum())
+
+print("\n9. VALORES ÚNICOS POR COLUMNA:")
+print(df.nunique())
+
+print("Planes nutricionales únicos:", df['nombre_plan'].unique())
+
+# 8. Análisis específico
+print("\n-+-+-+-+-+- Análisis específico -+-+-+-+-+-")
+
+print(df)
+
+print("---------------------------------------------------------------")
+
+print("\n10. PLANES POR DIFICULTAD DE PREPARACIÓN:")
+print(df['dificultad_preparacion'].value_counts())
+
+print("\n11. PROMEDIO DE CALORÍAS DIARIAS:")
+print(df['calorias_diarias'].mean())
+
+print("\n12. CALORÍAS MÁXIMAS:")
+print(df['calorias_diarias'].max())
+
+print("\n13. CALORÍAS MÍNIMAS:")
+print(df['calorias_diarias'].min())
+
+print("\n14. PROMEDIO DE PROTEÍNAS:")
+print(df['proteinas_gramos'].mean())
+
+print("\n15. COSTO SEMANAL PROMEDIO: $")
+print(df['costo_semanal_estimado'].mean())
+
+# 9. Ordenamiento, filtrado y agrupación
+print("\n9. Ordenamiento, filtrado y agrupación")
+
+print("\n16. PLANES ORDENADOS POR CALORÍAS (Mayor a menor):")
+print(df.sort_values(by='calorias_diarias', ascending=False))
+
+print("\n17. PLANES CON MÁS DE 2000 CALORÍAS:")
+filtro = df[df['calorias_diarias'] > 2000]
+print(filtro)
+
+print("\n18. PLANES CON COSTO SEMANAL MAYOR A $1000:")
+filtro = df[df['costo_semanal_estimado'] > 1000]
+print(filtro)
+
+print("\n19. RESUMEN POR DIFICULTAD DE PREPARACIÓN:")
+
+resumen = df.groupby('dificultad_preparacion').agg(
+    planes=('id_plan', 'count'),
+    calorias_promedio=('calorias_diarias', 'mean'),
+    proteinas_promedio=('proteinas_gramos', 'mean'),
+    costo_promedio=('costo_semanal_estimado', 'mean')
+)
+
+print(resumen)
+
+# 20. Gráfica de barras: Planes por dificultad
+conteo = df['dificultad_preparacion'].value_counts()
+
+plt.figure(figsize=(8, 5))
+plt.bar(conteo.index, conteo.values, color='skyblue')
+plt.title('Cantidad de planes por dificultad de preparación')
+plt.xlabel('Dificultad de preparación')
+plt.ylabel('Cantidad de planes')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+# 21. Gráfica de barras: Calorías por plan
+plt.figure(figsize=(8, 5))
+plt.bar(df['nombre_plan'], df['calorias_diarias'], color='lightgreen')
+plt.title('Calorías diarias por plan nutricional')
+plt.xlabel('Nombre del plan')
+plt.ylabel('Calorías diarias')
+plt.xticks(rotation=30)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+# 22. Histograma: Distribución de proteínas
+plt.figure(figsize=(8, 5))
+plt.hist(df['proteinas_gramos'], bins=5, color='orange', edgecolor='black')
+plt.title('Distribución de proteínas en los planes nutricionales')
+plt.xlabel('Proteínas en gramos')
+plt.ylabel('Frecuencia')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+# 23. Gráfica de dispersión: Calorías vs costo
+plt.figure(figsize=(8, 5))
+plt.scatter(
+    df['calorias_diarias'],
+    df['costo_semanal_estimado'],
+    color='red',
+    s=100
+)
+plt.title('Relación entre calorías diarias y costo semanal')
+plt.xlabel('Calorías diarias')
+plt.ylabel('Costo semanal en pesos')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+# 24. Diagrama de caja: Distribución de costos
+plt.figure(figsize=(7, 5))
+plt.boxplot(
+    df['costo_semanal_estimado'],
+    patch_artist=True,
+    boxprops=dict(facecolor='lightblue')
+)
+plt.title('Distribución de costos semanales de los planes')
+plt.ylabel('Costo semanal en pesos')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+# 25. Matriz de correlación
+correlacion = df.corr(numeric_only=True)
+
+print("\n--- MATRIZ DE CORRELACIÓN ---")
+print(correlacion)
+
+plt.figure(figsize=(9, 6))
+plt.imshow(correlacion, cmap='coolwarm', vmin=-1, vmax=1)
+plt.colorbar()
+
+plt.xticks(
+    range(len(correlacion.columns)),
+    correlacion.columns,
+    rotation=45
+)
+
+plt.yticks(
+    range(len(correlacion.columns)),
+    correlacion.columns
+)
+
+plt.title('Matriz de correlación de variables numéricas')
+plt.tight_layout()
+plt.show()

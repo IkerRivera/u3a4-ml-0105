@@ -1,0 +1,7 @@
+﻿id_plan,nombre_plan,calorias_diarias,proteinas_gramos,carbohidratos_gramos,grasas_gramos,comidas_por_dia,costo_semanal_estimado,dificultad_preparacion,aprobado_por_nutriologo
+501,Definición,1800,150,150,60,5,800,Media,True
+502,Volumen,3000,200,350,80,6,1200,Alta,True
+503,Mantenimiento,2200,120,250,70,4,900,Baja,True
+504,Vegano,2000,80,250,70,4,1000,Media,True
+505,Keto,1600,120,50,120,4,1100,Alta,True
+506,Deportista,2800,180,300,90,5,1300,Alta,True
