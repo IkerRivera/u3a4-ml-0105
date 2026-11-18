@@ -7,6 +7,10 @@
 > **📈 Dificultad:** Cero a principiante  
 > **🐍 Lenguaje:** Python  
 > **🛠️ Herramientas:** Visual Studio Code, Pandas, Matplotlib y CSV 
+
+## rutinas de nutricion 
+![alt text](image.png)
+
 ## tTABLA ORIGINAL DE RUTINAS DE NUTRICIÓN 
 ![alt text](image-1.png)
 ## Leer los datos desde el archivo CSV
